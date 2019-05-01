@@ -1,0 +1,1 @@
+0,30 * * * * DISPLAY=:0.0 osascript -e 'display dialog "Take a break!!!" with title "... Go stretch ..."';

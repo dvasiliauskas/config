@@ -1,0 +1,37 @@
+brew "openssl@3"
+
+brew "neovim"
+brew "fzf"
+brew "python"
+
+
+tap "koekeishiya/formulae"
+brew "koekeishiya/formulae/skhd"
+brew "koekeishiya/formulae/yabai"
+
+brew "ripgrep"
+brew "ripgrep-all"
+
+brew "htop"
+brew "wget"
+
+brew "fish"
+
+
+brew "tmux"
+
+brew "qemu"
+brew "libvirt"
+brew "asdf"
+brew "jq"
+
+brew "shellcheck"
+
+cask "zotero", args: { appdir: "~/Applications" }
+cask "zettlr", args: { appdir: "~/Applications" }
+cask "drawio", args: { appdir: "~/Applications" }
+cask "kitty", args: { appdir: "~/Applications" }
+cask "netnewswire", args: { appdir: "~/Applications" }
+cask "alt-tab", args: { appdir: "~/Applications" }
+
+brew "newsboat"

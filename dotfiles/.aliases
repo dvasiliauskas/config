@@ -1,0 +1,32 @@
+# +----+
+# | ls |
+# +----+
+
+alias ls='ls -lahFtr --color=auto'
+
+
+# vim/nvim, zsh will work
+alias vim="nvim"
+
+# vim without plugins, vanilla vim
+alias vvim="vim -u NONE"
+
+#remove all simlinks
+alias rmln="find -type l -delete"
+
+# cd into workspace
+alias ws="cd ~/Workspace"
+
+#cd into knowledge base and vim open
+alias pkb="cd ~/Workspace/pkb; vim ."
+
+#go to knowledge base and start in search mode
+#This command could be improved, however for now it open you right at kb and adds search
+#Needs full suite of nvim + plugins + kb to be downloaded
+#TODO: Add a definition for window manager/DE, to open this without aliases + zsh port maybe?
+alias skb="cd ~/Workspace/pkb; vim -c 'execute \"Rg\"' "
+
+alias dn="bash $HOME/Workspace/config_personal/scripts/new_day_note.sh"
+
+#clearing ssh key file for the agent
+alias ca="ssh-add -D"

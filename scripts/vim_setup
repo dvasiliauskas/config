@@ -1,0 +1,29 @@
+#!/bin/sh
+
+
+VI_VERSION=$(vi --version | head -n 1 | cut -d ' ' -f 5)
+NATIVE_VERSION=8.0
+SUPPORTS_NATIVE_PACK=$(echo "$VI_VERSION > $NATIVE_VERSION" | bc)
+
+if [ $SUPPORTS_NATIVE_PACK == "1" ]
+then
+    echo "Native pack loading"
+fi
+
+# create nvim configs and link to .vimrc
+mkdir -p ~/.config/nvim
+touch ~/.config/nvim/init.vim
+
+cat <<EOT >> ~/.config/nvim/init.vim
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+source ~/.vim/vimrc
+
+
+EOT
+
+
+mkdir -p ~/.vim/pack/vendor/start
+
+
+

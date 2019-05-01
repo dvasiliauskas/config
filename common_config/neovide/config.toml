@@ -1,0 +1,13 @@
+wsl = false
+no-multigrid = false
+vsync = true
+maximized = false
+srgb = false
+idle = true
+neovim-bin = "$NVIM_BIN" # should in path
+frame = "full"
+
+[font]
+normal = ["Jetbrains Mono"]
+size = 11
+

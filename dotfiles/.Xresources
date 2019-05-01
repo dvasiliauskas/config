@@ -1,0 +1,100 @@
+!!== -> Separator
+!!   -> Section Heading
+
+!!=============================================================================
+
+!! ==========Xft==========
+!! 13inch mbp, 2560x1600, 227 ppi
+    !! native: 2560x1600
+    !! scaled: 1680x1050
+    !! scaled: 1440x900
+    !! scaled: 1024x640
+    !Xft.dpi: 227
+
+!! Monitor 3840x2160 27inch, 163ppi as per manufacturer
+    !! native: 3840x2160
+    !Xft.dpi: 163
+    
+    Xft.antialias: 1
+    Xft.hinting: 1
+    Xft.autohint: 0
+    Xft.rgba: rgb
+    Xft.hintstyle: hintslight
+    Xft.lcdfilter: lcddefault
+
+!ref: https://wiki.manjaro.org/index.php?title=Improve_Font_Rendering
+!!=============================================================================
+
+!! ==========Fonts==========
+    !*.font: xft:Ubuntu Mono:style=Regular:pixelsize=16
+    *.font: xft:Jetbrains Mono:style=Regular:pixelsize=14
+
+!! ==========Colors========== no inspiration? -> https://terminal.sexy/ 
+    *.foreground: #E5EDEC
+    *.background: #002B36
+    *.cursorColor: #1ABC9C
+    *.highlightColor: #001D1B
+    *.highlightTextColor: #2BD3BF
+
+!! black
+    *.color0:       #073642
+    *.color8:       #002B36
+
+!! red
+    *.color1:       #DC322F
+    *.color9:       #CB4B16
+
+!! green
+    *.color2:       #FFF812
+    *.color10:      #586E75
+
+!! yellow
+    *.color3:       #F76D04
+    *.color11:      #657B83
+
+!! blue
+    *.color4:       #1ABC9C
+    *.color12:      #1ABC9C
+
+!! magenta
+    *.color5:       #D33682
+    *.color13:      #6C71C4
+
+!! cyan
+    *.color6:       #2AA198
+    *.color14:      #93A1A1
+
+!! white
+    *.color7:       #EEE8D5
+    *.color15:      #FDF6E3
+
+!!=============================================================================
+!!urxvt --help
+
+!! ==========Font==========
+    URxvt.lineSpace: 3
+    URxvt.letterSpace: 0
+
+!! ==========Transparency==========
+!! composite transparency
+    urxvt*depth: 32
+    URxvt.background: [90]#002B36
+
+!! virtual transparency, precedence over composite ^^ if both are specified
+    !URxvt.transparent:   true
+    !URxvt.shading:       10
+
+!! ==========Scroll==========
+    URxvt.scrollBar: false
+    URxvt.saveLines: 5000
+    URxvt.scrollstyle: rxvt
+
+URxvt.internalBorder: 0 !padding from edge
+
+URxvt.cursorBlink: 1
+URxvt.cursorUnderline: 0
+
+URxvt.urlLauncher: firefox
+URxvt.underlineURLs: true
+
+

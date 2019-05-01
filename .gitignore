@@ -1,0 +1,24 @@
+*cache.db
+
+*.DS_Store
+
+#newsboat ignore
+*/history.search
+*/history.cmdline
+*/cache.db
+dotfiles/.newsboat/history.cmdline
+dotfiles/.newsboat/cache.db*
+dotfiles/.newsboat/history*
+
+dotfiles/.vim/pack*
+dotfiles/.vim/pack/**
+dotfiles/.vim/pack
+dotfiles/.vim/pack/*
+dotfiles/.vim/pack/vendor
+
+*/Brewfile.lock.json
+
+**/undodir/
+**/.netrwhist/
+
+common_config/tmux/plugins/*

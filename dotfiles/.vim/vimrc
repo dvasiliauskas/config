@@ -1,0 +1,8 @@
+
+runtime settings.vim
+runtime builtin_remaps.vim
+runtime autocmd.vim
+
+runtime plugins.vim
+
+runtime theme.vim

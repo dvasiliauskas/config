@@ -1,0 +1,27 @@
+#!/bin/sh
+
+git clone --depth 1 https://github.com/morhetz/gruvbox.git ~/.vim/pack/vendor/opt/gruvbox
+git clone --depth 1 https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/opt/nerdtree
+git clone --depth 1 https://github.com/airblade/vim-gitgutter.git ~/.vim/pack/vendor/opt/gitgutter
+git clone --depth 1 https://github.com/vim-airline/vim-airline.git ~/.vim/pack/vendor/opt/airline
+git clone --depth 1 https://github.com/tpope/vim-fugitive.git ~/.vim/pack/vendor/opt/fugitive
+git clone --depth 1 https://github.com/vim-airline/vim-airline-themes.git ~/.vim/pack/vendor/opt/airline-themes
+git clone --depth 1 https://github.com/puremourning/vimspector.git  ~/.vim/pack/vendor/opt/vimspector
+
+git clone --depth 1 https://github.com/junegunn/fzf.vim.git ~/.vim/pack/vendor/opt/fzf-vim
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.vim/pack/vendor/opt/fzf
+
+
+git clone --depth 1 https://github.com/nvim-treesitter/nvim-treesitter.git ~/.vim/pack/vendor/opt/nvim-treesitter
+git clone --depth 1 https://github.com/nvim-telescope/telescope.nvim.git ~/.vim/pack/vendor/opt/telescope
+git clone --depth 1 https://github.com/nvim-lua/plenary.nvim.git ~/.vim/pack/vendor/opt/plenary
+
+git clone --depth 1 https://github.com/neovim/nvim-lspconfig.git ~/.vim/pack/vendor/opt/nvim-lspconfig
+
+git clone --depth 1 https://github.com/hrsh7th/nvim-cmp.git ~/.vim/pack/vendor/opt/nvim-cmp
+git clone --depth 1 https://github.com/hrsh7th/cmp-cmdline.git ~/.vim/pack/vendor/opt/cmp-cmdline
+
+git clone --depth 1 https://github.com/hrsh7th/cmp-path.git ~/.vim/pack/vendor/opt/cmp-path
+git clone --depth 1 https://github.com/hrsh7th/cmp-buffer.git ~/.vim/pack/vendor/opt/cmp-buffer
+git clone --depth 1 https://github.com/hrsh7th/cmp-nvim-lsp.git ~/.vim/pack/vendor/opt/cmp-nvim-lsp
+git clone --depth 1 https://github.com/sainnhe/everforest.git ~/.vim/pack/vendor/opt/everforest

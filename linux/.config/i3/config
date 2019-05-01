@@ -1,0 +1,450 @@
+# Ref: https://i3wm.org/docs/userguide.html 
+
+
+## ==========Definitions==========
+    set $TERMINAL urxvt
+    set $EXIT_I3 "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+    ## ==========KEYBOARD==========
+    set $mod Mod4
+    set $alt Mod1
+    set $ctrl Control
+
+    ## ==========MONITORS==========
+    ## Retrieve via xrandr 
+    set $MONITOR_LEFT DVI-I-2-1
+    set $MONITOR_CENTER Virtual1
+    set $MONITOR_RIGHT DVI-I-3-2
+ 
+    ## ==========Spotify==========
+    set $SPOTIFY_PREVIOUS dbus-send --type=method_call --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+    set $SPOTIFY_NEXT dbus-send --type=method_call --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+    set $SPOTIFY_PLAY_PAUSE dbus-send --type=method_call --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+
+    ## ==========Background Wallpaper==========
+    set $BG_WP_ABS_PATH $HOME/Desktop/Valley-2-dragged.jpg
+
+
+## ==========Exec========
+
+    ## ==========Screen Setup=========
+    ## IMPORTANT, AltGr mapped to alt as well
+        exec xmodmap -e "clear mod5"
+        exec xmodmap -e "keycode 108 = Alt_L"
+
+    ## ==========Screen Setup=========
+        exec xrandr --output HDMI-1 --primary
+        exec xrandr --auto && xrandr --output DVI-I-3-2 --right-of HDMI-1 && exec xrandr --output DVI-I-2-1 --left-of HDMI-1 && exec xrandr --output eDP-1 --below DVI-I-2-1
+        exec xrandr --output eDP-1 --below DVI-I-2-1
+
+    ## ==========Background Wallpaper==========
+    ## feh opts: --bg-fill, --bg-scale, --bg-center
+        exec feh --bg-fill $BG_WP_ABS_PATH
+
+    ## ==========Start Compositor=========
+        exec --no-startup-id "compton -b"
+
+
+## ==========Font========
+## Text rendering and scalability on retina/hidpi displays (thanks to pango)
+## Covers: window tiles, bar(definition in bar{} block overrides this)
+    font pango:SF Pro Text 9
+    #font pango:DejaVu Sans Mono 8 #fallback
+
+
+## ==========Bindings==========
+    
+    ## ==========Reload Configuration==========
+        bindsym $mod+Shift+c reload
+
+    ## ==========Restart i3==========
+    ## Can be used to upgrade i3, preserves layout/session
+        bindsym $mod+Shift+r restart
+
+    ## ==========Exit i3=========
+        bindsym $mod+Shift+e exec $EXIT_I3 
+
+    ## ==========Spotify==========
+        # Spotify Previous
+        bindsym $alt+Scroll_Lock exec $SPOTIFY_PREVIOUS 
+        # Spotify Next
+        bindsym $alt+Pause exec $SPOTIFY_NEXT
+        # Spotify Play/Pause
+        bindsym $alt+space exec $SPOTIFY_PLAY_PAUSE 
+
+    ## ==========Screenshots=========
+        ## ==========Screenshot to file=========
+        ## Ref: https://gist.github.com/dianjuar/ee774561a8bc02b077989bc17424a19f
+            bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Pictures/screenshot_$(date)"
+            #bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
+            #bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Pictures/$(date)"
+
+        ## ==========Screenshot to clipboard=========
+        ## Clipboard Screenshots
+            bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
+            #bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
+            #bindsym Ctrl+$mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+
+    ## ==========Sleep==========
+    bindsym $mod+Print exec systemctl suspend
+
+    ## ==========Start Terminal==========
+    bindsym $mod+Return exec $TERMINAL
+
+    ## ==========Kill Focused Window==========
+    bindsym $mod+Shift+q kill
+
+    ## ==========Start dmenu (program launcher)==========
+    ## There also is the (new) i3-dmenu-desktop which only displays applications listed in .desktop file.
+    ## It is a wrapper around dmenu, so you need that installed.
+    bindsym $mod+space exec i3-dmenu-desktop
+    #bindsym $mod+d exec dmenu_run
+    #bindsym $mod+d exec i3-dmenu-desktop --dmenu='dmenu -nf '#1ABC9C' -nb '#1F2D3A' -sb '#1F2D3A' -sf '#1ABC9C' -fn 'monospace-10' -p 'dmenu prompt &gt;'"
+    #bindsym $mod+d exec i3-dmenu-desktop --dmenu='dmenu -nb "#1F2D3A" -nf "#1ABC9C" -sb "#1F2D3A" -sf "#1ABC9C"'
+    #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+    ## ==========Change Focus==========
+    bindsym $mod+j focus left
+    bindsym $mod+k focus down
+    bindsym $mod+l focus up
+    bindsym $mod+semicolon focus right
+
+    ## ==========Change Focus(Cursor Keys)==========
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    ## ==========Move Focused Window==========
+    bindsym $mod+Shift+j move left
+    bindsym $mod+Shift+k move down
+    bindsym $mod+Shift+l move up
+    bindsym $mod+Shift+semicolon move right
+
+    ## ==========Move Focused Window(Cursor Keys)==========
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+
+    ## ==========Split Horizontal Orientation==========
+    bindsym $mod+h split h
+
+    ## ==========Split Vertical Orientation==========
+    bindsym $mod+v split v
+
+    ## ==========Enter Fullscreen for focused container==========
+    bindsym $mod+f fullscreen toggle
+
+    ## ==========Change Container Layout (Stacked, Tabbed, Toggle, Split)==========
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    ## ==========Toggle Tiling / Floating==========
+    bindsym $mod+Shift+space floating toggle
+
+    ## ==========Change Focus between Tiling / Floating windows==========
+    bindsym $mod+d focus mode_toggle
+
+    ## ==========Focus Parent Container==========
+    bindsym $mod+a focus parent
+
+    ## ==========Focus Child Container==========
+    #bindsym $mod+d focus child
+
+    ## ==========Move To Left / Right Workspace==========
+    bindsym $ctrl+$alt+Right workspace next
+    bindsym $ctrl+$alt+Left workspace prev
+
+    ## ==========Open Workspace=======
+    
+        ## ==========Open 1-10 Workspaces========
+        ## Left screen
+            bindsym $alt+1 workspace 1
+            bindsym $alt+2 workspace 2
+            bindsym $alt+3 workspace 3
+            bindsym $alt+4 workspace 4
+            bindsym $alt+5 workspace 5
+            bindsym $alt+6 workspace 6
+            bindsym $alt+7 workspace 7
+            bindsym $alt+8 workspace 8
+            bindsym $alt+9 workspace 9
+            bindsym $alt+0 workspace 10
+
+        ## ==========Open 10-20 Workspaces========
+        ## Middle screen
+            bindsym $mod+1 workspace 11
+            bindsym $mod+2 workspace 12
+            bindsym $mod+3 workspace 13
+            bindsym $mod+4 workspace 14
+            bindsym $mod+5 workspace 15
+            bindsym $mod+6 workspace 16
+            bindsym $mod+7 workspace 17
+            bindsym $mod+8 workspace 18
+            bindsym $mod+9 workspace 19
+            bindsym $mod+0 workspace 20
+
+        ## ==========Open 20-30 Workspaces========
+        ## Right screen
+            bindsym $mod+$ctrl+1 workspace 21
+            bindsym $mod+$ctrl+2 workspace 22
+            bindsym $mod+$ctrl+3 workspace 23
+            bindsym $mod+$ctrl+4 workspace 24
+            bindsym $mod+$ctrl+5 workspace 25
+            bindsym $mod+$ctrl+6 workspace 26
+            bindsym $mod+$ctrl+7 workspace 27
+            bindsym $mod+$ctrl+8 workspace 28
+            bindsym $mod+$ctrl+9 workspace 29
+            bindsym $mod+$ctrl+0 workspace 30
+
+        ## ==========Open 30-40 Workspaces========
+        ## Laptop screen / Additional screen
+            bindsym $mod+$ctrl+$alt+1 workspace 31
+            bindsym $mod+$ctrl+$alt+2 workspace 32
+            bindsym $mod+$ctrl+$alt+3 workspace 33
+            bindsym $mod+$ctrl+$alt+4 workspace 34
+            bindsym $mod+$ctrl+$alt+5 workspace 35
+            bindsym $mod+$ctrl+$alt+6 workspace 36
+            bindsym $mod+$ctrl+$alt+7 workspace 37
+            bindsym $mod+$ctrl+$alt+8 workspace 38
+            bindsym $mod+$ctrl+$alt+9 workspace 39
+            bindsym $mod+$ctrl+$alt+0 workspace 40
+
+    ## ==========Move Container to Workspaces========
+    
+        ## ==========Move Container to 0-10 Workspaces========
+        ## Moves selected container to 0-10 Workspace, then focuses that screen
+        ## Ref: https://faq.i3wm.org/question/6555/auto-follow-application-container.1.html
+            bindsym $mod+$alt+Shift+1 move container to workspace 1; workspace 1
+            bindsym $mod+$alt+Shift+2 move container to workspace 2; workspace 2
+            bindsym $mod+$alt+Shift+3 move container to workspace 3; workspace 3
+            bindsym $mod+$alt+Shift+4 move container to workspace 4; workspace 4
+            bindsym $mod+$alt+Shift+5 move container to workspace 5; workspace 5
+            bindsym $mod+$alt+Shift+6 move container to workspace 6; workspace 6
+            bindsym $mod+$alt+Shift+7 move container to workspace 7; workspace 7
+            bindsym $mod+$alt+Shift+8 move container to workspace 8; workspace 8
+            bindsym $mod+$alt+Shift+9 move container to workspace 9; workspace 9
+            bindsym $mod+$alt+Shift+0 move container to workspace 10; workspace 10
+
+        ## ==========Move Container to 11-20 Workspaces========
+        ## Moves selected container to 11-20 Workspace, then focuses that screen
+        ## Ref: https://faq.i3wm.org/question/6555/auto-follow-application-container.1.html
+            bindsym $mod+Shift+1 move container to workspace 11; workspace 11
+            bindsym $mod+Shift+2 move container to workspace 12; workspace 12
+            bindsym $mod+Shift+3 move container to workspace 13; workspace 13
+            bindsym $mod+Shift+4 move container to workspace 14; workspace 14
+            bindsym $mod+Shift+5 move container to workspace 15; workspace 15
+            bindsym $mod+Shift+6 move container to workspace 16; workspace 16
+            bindsym $mod+Shift+7 move container to workspace 17; workspace 17
+            bindsym $mod+Shift+8 move container to workspace 18; workspace 18
+            bindsym $mod+Shift+9 move container to workspace 19; workspace 19
+            bindsym $mod+Shift+0 move container to workspace 20; workspace 20
+
+        ## ==========Move Container to 20-30 Workspaces========
+        ## Moves selected container to 20-30 Workspace, then focuses that screen
+        ## Ref: https://faq.i3wm.org/question/6555/auto-follow-application-container.1.html
+            bindsym $mod+Shift+$ctrl+1 move container to workspace 21; workspace 21
+            bindsym $mod+Shift+$ctrl+2 move container to workspace 22; workspace 22
+            bindsym $mod+Shift+$ctrl+3 move container to workspace 23; workspace 23
+            bindsym $mod+Shift+$ctrl+4 move container to workspace 24; workspace 24
+            bindsym $mod+Shift+$ctrl+5 move container to workspace 25; workspace 25
+            bindsym $mod+Shift+$ctrl+6 move container to workspace 26; workspace 26
+            bindsym $mod+Shift+$ctrl+7 move container to workspace 27; workspace 27
+            bindsym $mod+Shift+$ctrl+8 move container to workspace 28; workspace 28
+            bindsym $mod+Shift+$ctrl+9 move container to workspace 29; workspace 29
+            bindsym $mod+Shift+$ctrl+0 move container to workspace 30; workspace 30
+
+
+    ## ==========Rezise=======
+    ## Mouse can be used also!
+        bindsym $mod+r mode "resize"
+        mode "resize" {
+            ## These bindings trigger as soon as you enter resize mode
+            ## Pressing left will shrink the window’s width
+            ## Pressing right will grow the window’s width
+            ## Pressing up will shrink the window’s height
+            ## Pressing down will grow the window’s height
+            bindsym j resize shrink width 10 px or 10 ppt
+            bindsym k resize grow height 10 px or 10 ppt
+            bindsym l resize shrink height 10 px or 10 ppt
+            bindsym semicolon resize grow width 10 px or 10 ppt
+
+            ## Same bindings, but for arrow keys
+            bindsym Left resize shrink width 10 px or 10 ppt
+            bindsym Down resize grow height 10 px or 10 ppt
+            bindsym Up resize shrink height 10 px or 10 ppt
+            bindsym Right resize grow width 10 px or 10 ppt
+
+            ## Back to normal: Enter or Escape
+            bindsym Return mode "default"
+            bindsym Escape mode "default"
+        }
+
+
+## ==========Bottom Bar Display=======
+## Defined per display
+
+    ## ==========Colours=====
+    set $BAR_BACKGROUND #1F2D3A
+    set $BAR_STATUSLINE #1ABC9C
+    set $BAR_SEPARATOR #1ABC9C
+    
+    set $BAR_FOCUSED_BACKGROUND #1ABC9C 
+    set $BAR_INACTIVE_BACKGROUND #1F2D3A      
+
+    set $BAR_FOCUSED_TEXT  #1F2D3A
+    set $BAR_INACTIVE_TEXT #1ABC9C     
+
+    set $BAR_FOCUSED_BORDER  #1ABC9C
+    set $BAR_INACTIVE_BORDER #1F2D3A     
+
+    ## ==========Left Monitor Bar======
+    bar {
+            mode dock
+            status_command i3status
+            position bottom
+            output $MONITOR_LEFT
+            tray_output primary
+            tray_padding 2
+            font pango:SF Pro Text 9
+            colors {
+                    background $BAR_BACKGROUND
+                    statusline $BAR_STATUSLINE
+                    separator  $BAR_SEPARATOR
+                    # colorclass       <border>             <background>             <text>
+                    focused_workspace  $BAR_FOCUSED_BORDER  $BAR_FOCUSED_BACKGROUND  $BAR_FOCUSED_TEXT
+                    inactive_workspace $BAR_INACTIVE_BORDER $BAR_INACTIVE_BACKGROUND $BAR_INACTIVE_TEXT 
+            }
+    }
+
+    ## ==========Center Monitor Bar======
+    bar {
+            mode dock
+            status_command i3status
+            position bottom
+            output $MONITOR_CENTER
+            tray_output primary
+            tray_padding 2
+            font pango:SF Pro Text 10
+            colors {
+                    background $BAR_BACKGROUND
+                    statusline $BAR_STATUSLINE
+                    separator  $BAR_SEPARATOR
+                    # colorclass       <border>             <background>             <text>
+                    focused_workspace  $BAR_FOCUSED_BORDER  $BAR_FOCUSED_BACKGROUND  $BAR_FOCUSED_TEXT
+                    inactive_workspace $BAR_INACTIVE_BORDER $BAR_INACTIVE_BACKGROUND $BAR_INACTIVE_TEXT 
+            }
+    }
+
+    ## ==========Right Monitor Bar======
+    bar {
+            mode dock
+            status_command i3status
+            position bottom
+            output $MONITOR_RIGHT
+            tray_output primary
+            tray_padding 2
+            font pango:SF Pro Text 9
+            colors {
+                    background $BAR_BACKGROUND
+                    statusline $BAR_STATUSLINE
+                    separator  $BAR_SEPARATOR
+                    # colorclass       <border>             <background>             <text>
+                    focused_workspace  $BAR_FOCUSED_BORDER  $BAR_FOCUSED_BACKGROUND  $BAR_FOCUSED_TEXT
+                    inactive_workspace $BAR_INACTIVE_BORDER $BAR_INACTIVE_BACKGROUND $BAR_INACTIVE_TEXT 
+            }
+    }
+
+
+## ==========Workspace -> Monitor Assignment==========
+
+    ## ==========Left Monitor==========
+        workspace 1 output $MONITOR_LEFT
+        workspace 2 output $MONITOR_LEFT
+        workspace 3 output $MONITOR_LEFT
+        workspace 4 output $MONITOR_LEFT
+        workspace 5 output $MONITOR_LEFT
+        workspace 6 output $MONITOR_LEFT
+        workspace 7 output $MONITOR_LEFT
+        workspace 8 output $MONITOR_LEFT
+        workspace 9 output $MONITOR_LEFT
+        workspace 10 output $MONITOR_LEFT
+
+    ## ==========Middle Monitor==========
+        workspace 11 output $MONITOR_CENTER
+        workspace 12 output $MONITOR_CENTER
+        workspace 13 output $MONITOR_CENTER
+        workspace 14 output $MONITOR_CENTER
+        workspace 15 output $MONITOR_CENTER
+        workspace 16 output $MONITOR_CENTER
+        workspace 17 output $MONITOR_CENTER
+        workspace 18 output $MONITOR_CENTER
+        workspace 19 output $MONITOR_CENTER
+        workspace 20 output $MONITOR_CENTER
+
+    ## ==========Right Monitor==========
+        workspace 21 output $MONITOR_RIGHT
+        workspace 22 output $MONITOR_RIGHT
+        workspace 23 output $MONITOR_RIGHT
+        workspace 24 output $MONITOR_RIGHT
+        workspace 25 output $MONITOR_RIGHT
+        workspace 26 output $MONITOR_RIGHT
+        workspace 27 output $MONITOR_RIGHT
+        workspace 28 output $MONITOR_RIGHT
+        workspace 29 output $MONITOR_RIGHT
+        workspace 30 output $MONITOR_RIGHT
+
+    ## ==========Additional Monitor==========
+        workspace 31 output eDP-1
+        workspace 32 output eDP-1
+        workspace 33 output eDP-1
+        workspace 34 output eDP-1
+        workspace 35 output eDP-1
+        workspace 36 output eDP-1
+        workspace 37 output eDP-1
+        workspace 38 output eDP-1
+        workspace 39 output eDP-1
+        workspace 40 output eDP-1
+
+
+## ==========Application Assignment to Workspace=========
+## On application open, define it to be open in a particular workspace
+## Use xprop to find the application 'xprop | grep CLASS' 
+## focus_on_window_activation focus
+## Only for chrome windows to be focused
+## Ref: https://www.reddit.com/r/i3wm/comments/4bveo1/jump_to_workspace_when_window_is_created/
+## for_window [urgent="latest" class="^chrome$"] focus
+
+    ## ==========Firefox to Workspace 1========
+        assign [class="Firefox"] 1
+        for_window [class="Firefox"] focus
+
+    ## ==========Chrome to Workspace 2========
+        assign [class="Google-chrome"] 2
+        for_window [class="Google-chrome"] focus
+
+    ## ==========Jetbrains to Workspace 10========
+        assign [class="jetbrains-idea"] 10
+        for_window [class="jetbrains-idea"] focus
+
+    ## ==========Spotify on open send to Workspace 10 then focus========
+        for_window [class="Spotify"] move to workspace 10
+        for_window [class="Spotify"] focus
+
+
+## ==========Style==========
+    ## class                 border  bground text    indicator child_border
+    client.focused           #1F2D3A #1F2D3A #1ABC9C #1F2D3A   #1F2D3A
+    client.focused_inactive  #1F2D3A #1F2D3A #FFFFFF #292D2E   #1ABC9C
+    client.unfocused         #1F2D3A #1F2D3A #FFFFFF #292D2E   #222222
+    client.urgent            #2F343A #900000 #FFFFFF #900000   #900000
+    client.placeholder       #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
+    client.background        #FFFFFF
+
+
+## ==========Additional Settings==========
+## Use Mouse+$mod to drag floating windows to their wanted position
+    floating_modifier $mod  
+
+##
